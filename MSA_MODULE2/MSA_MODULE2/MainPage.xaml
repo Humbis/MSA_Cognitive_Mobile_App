@@ -4,8 +4,14 @@
              xmlns:local="clr-namespace:MSA_MODULE2"
              x:Class="MSA_MODULE2.MainPage">
 
-	<Label Text="Welcome to Xamarin Forms!" 
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />
+    <StackLayout Margin="20" Orientation="Vertical">
+        <Button Text="Take Photo and Analyze" Clicked="loadCamera" />
+        <Image x:Name="image" Aspect="AspectFit"/>
+        <ActivityIndicator x:Name="LoadingSpinner" Color="Black" IsRunning="false" />
+        <StackLayout Orientation="Horizontal">
+            <Label x:Name="TagLabel">
+            </Label>
+        </StackLayout>
+    </StackLayout>
 
 </ContentPage>
