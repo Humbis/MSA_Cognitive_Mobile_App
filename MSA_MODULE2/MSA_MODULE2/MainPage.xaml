@@ -12,6 +12,7 @@
             <Label x:Name="TagLabel">
             </Label>
         </StackLayout>
+        <Button Text="See Accuracy Table" Clicked="OnNextPageButtonClicked" />
     </StackLayout>
 
 </ContentPage>

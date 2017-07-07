@@ -117,6 +117,12 @@ namespace MSA_MODULE2
                 //Get rid of file once we have finished using it
                 file.Dispose();
             }
+
         }
+        async void OnNextPageButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AccuracyTable());
+        }
+
     }
 }

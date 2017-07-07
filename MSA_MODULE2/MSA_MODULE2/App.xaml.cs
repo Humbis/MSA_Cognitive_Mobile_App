@@ -13,7 +13,7 @@ namespace MSA_MODULE2
 		{
 			InitializeComponent();
 
-			MainPage = new MSA_MODULE2.MainPage();
+			MainPage = new NavigationPage(new MSA_MODULE2.MainPage());
 		}
 
 		protected override void OnStart ()

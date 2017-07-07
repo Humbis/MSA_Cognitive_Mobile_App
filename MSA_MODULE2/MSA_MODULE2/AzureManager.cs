@@ -12,12 +12,12 @@ namespace MSA_MODULE2
 
         private static AzureManager instance;
         private MobileServiceClient client;
-        private IMobileServiceTable<CognitiveAccuracyDbModel> notHotDogTable;
+        private IMobileServiceTable<ComputerVisionInfo> accuracyTable;
 
         private AzureManager()
         {
             this.client = new MobileServiceClient("https://msaModule2WhatIsThis.azurewebsites.net");
-            this.notHotDogTable = this.client.GetTable<CognitiveAccuracyDbModel>();
+            this.accuracyTable = this.client.GetTable<ComputerVisionInfo>();
         }
 
         public MobileServiceClient AzureClient
@@ -38,10 +38,10 @@ namespace MSA_MODULE2
             }
         }
 
-        //public async Task<List<CognitiveAccuracyDbModel>> GetAccuracyInfo()
-        //{
-        //    return await this.notHotDogTable.ToListAsync();
-        //}
+        public async Task<List<ComputerVisionInfo>> GetAccuracyInfo()
+        {
+            return await this.accuracyTable.ToListAsync();
+        }
     }
 
 }

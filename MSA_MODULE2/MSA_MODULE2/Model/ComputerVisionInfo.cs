@@ -5,15 +5,15 @@ using System.Text;
 
 namespace MSA_MODULE2.Model
 {
-    class CognitiveAccuracyDbModel
+    public class ComputerVisionInfo
     {
         [JsonProperty(PropertyName = "Id")]
         public string ID { get; set; }
 
         [JsonProperty(PropertyName = "caption")]
-        public float caption { get; set; }
+        public string Caption { get; set; }
 
         [JsonProperty(PropertyName = "correct")]
-        public float isCorrect { get; set; }
+        public bool Correct { get; set; }
     }
 }
