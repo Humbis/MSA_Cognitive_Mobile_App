@@ -7,10 +7,14 @@
     <StackLayout Margin="20" Orientation="Vertical">
         <Button Text="Take Photo and Analyze" Clicked="loadCamera" />
         <Image x:Name="image" Aspect="AspectFit"/>
-        <ActivityIndicator x:Name="LoadingSpinner" Color="Black" IsRunning="false" />
         <StackLayout Orientation="Horizontal">
             <Label x:Name="TagLabel">
             </Label>
+        </StackLayout>
+        <ActivityIndicator x:Name="LoadingSpinner" Color="Black" IsRunning="false" />
+        <StackLayout x:Name="GuessingBtns" Orientation="Horizontal" IsEnabled="False" IsVisible="False">
+            <Button Text="Incorrect" Clicked="OnIncorrectClicked"/>
+            <Button Text="Correct" Clicked="OnCorrectClicked"/>
         </StackLayout>
         <Button Text="See Accuracy Table" Clicked="OnNextPageButtonClicked" />
     </StackLayout>

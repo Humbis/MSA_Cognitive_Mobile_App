@@ -42,6 +42,11 @@ namespace MSA_MODULE2
         {
             return await this.accuracyTable.ToListAsync();
         }
+
+        public async Task PostAccuracyInfo(ComputerVisionInfo entry)
+        {
+            await this.accuracyTable.InsertAsync(entry);
+        }
     }
 
 }

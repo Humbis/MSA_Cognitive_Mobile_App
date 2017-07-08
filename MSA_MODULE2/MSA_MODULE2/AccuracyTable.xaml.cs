@@ -18,6 +18,7 @@ namespace MSA_MODULE2
         public AccuracyTable ()
 		{
 			InitializeComponent ();
+            this.Title = "How Accurate Was It?";
 		}
         async void Handle_ClickedAsync(object sender, System.EventArgs e)
         {

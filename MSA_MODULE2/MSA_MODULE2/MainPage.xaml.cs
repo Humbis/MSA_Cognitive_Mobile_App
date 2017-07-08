@@ -15,9 +15,11 @@ namespace MSA_MODULE2
 {
     public partial class MainPage : ContentPage
     {
+        private string caption = "";
         public MainPage()
         {
             InitializeComponent();
+            this.Title = "What Is This?";
         }
 
         private async void loadCamera(object sender, EventArgs e)
@@ -58,6 +60,7 @@ namespace MSA_MODULE2
 
         async Task MakePredictionRequest(MediaFile file)
         {
+            caption = "";
             Contract.Ensures(Contract.Result<Task>() != null);
             var client = new HttpClient();
 
@@ -71,13 +74,14 @@ namespace MSA_MODULE2
 
             using (var content = new ByteArrayContent(byteData))
             {
-
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 LoadingSpinner.IsVisible = true;
                 LoadingSpinner.IsRunning = true;
                 response = await client.PostAsync(url, content);
                 LoadingSpinner.IsRunning = false;
                 LoadingSpinner.IsVisible = false;
+                GuessingBtns.IsEnabled = true;
+                GuessingBtns.IsVisible = true;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -93,7 +97,7 @@ namespace MSA_MODULE2
                     tags = tags.Remove(tags.Length - 2);
                     foreach (CognitiveResponse.Caption c in responseData.description.captions)
                     {
-                        
+                      
                         if (c.confidence > 0.8)
                         {
                             TagLabel.Text += "This is most likely: " + c.text + "\n";
@@ -104,16 +108,16 @@ namespace MSA_MODULE2
                         {
                             TagLabel.Text += "This might be: " + c.text + "\n";
                         }
-                        
+                        caption += c.text + "/";
                     }
                     
                     TagLabel.Text += "Tags: " + tags;
                 }
                 else
                 {
-                    TagLabel.Text = response.ToString();        
+                    TagLabel.Text = response.ToString();        //Debugging purposes
                 }
-
+                caption = caption.Remove(caption.Length - 1);
                 //Get rid of file once we have finished using it
                 file.Dispose();
             }
@@ -124,5 +128,28 @@ namespace MSA_MODULE2
             await Navigation.PushAsync(new AccuracyTable());
         }
 
+        private void OnCorrectClicked(object sender, EventArgs e)
+        {
+            UpdateAzureTable(true);
+        }
+        private void OnIncorrectClicked(object sender, EventArgs e)
+        {
+            UpdateAzureTable(false);
+        }
+        private async void UpdateAzureTable(bool isCorrect)
+        {
+            GuessingBtns.IsEnabled = false;
+            GuessingBtns.IsVisible = false;
+            LoadingSpinner.IsVisible = true;
+            LoadingSpinner.IsRunning = true;
+            ComputerVisionInfo newEntry = new ComputerVisionInfo
+            {
+                Caption = caption,
+                Correct = isCorrect
+            };
+            await AzureManager.AzureManagerInstance.PostAccuracyInfo(newEntry);
+            LoadingSpinner.IsRunning = false;
+            LoadingSpinner.IsVisible = false;
+        }
     }
 }
